@@ -8,6 +8,7 @@ functions:
   CPEmailTask:
     handler: main.lambda_handler
     events:
-     -http:
-         path: main
-         method: post
+    - http:
+        path: main.lambda_handler
+        method: POST
+        
