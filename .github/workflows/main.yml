@@ -28,7 +28,9 @@ jobs:
       run: |
           npm install -g serverless 
           npm install -D https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz
+          npm install --save serverless-python-requirements
           pip install requests
+          pip freeze > requirements.txt
 
 #Configure AWS CLI
     - name: Configure AWS Credentials
@@ -49,7 +51,6 @@ jobs:
     - name: Deploy to AWS
       run: |
         pip install awscli 
-        npm i
         sls deploy 
       timeout-minutes: 30
       continue-on-error: true
