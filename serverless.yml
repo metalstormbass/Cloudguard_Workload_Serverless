@@ -12,3 +12,9 @@ functions:
         path: main.lambda_handler
         method: POST
         
+resources:
+  Resources:
+    SuperTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: MyCustomTopic
