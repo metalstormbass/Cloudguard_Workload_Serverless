@@ -10,7 +10,8 @@ jobs:
   build: 
     runs-on: ubuntu-latest
     env:
-      working-directory: . 
+      working-directory: .
+      CG_TOKEN: ${{ secrets.CG_TOKEN }}
     
     steps:
 #Setup Environment
@@ -44,11 +45,29 @@ jobs:
         aws-region: us-east-1  
 
 # Insert Secrets into serverless.yml
-    - name: Find and Replace
+    - name: Find and Replace Email
       uses: jacobtomlinson/gha-find-replace@master
       with:
-        find: "EMAILADDRESS"
+        find: "REPLACE.EMAILADDRESS"
         replace: ${{ secrets.EMAIL }}
+        
+    - name: Find and Replace MGMTHOSTNAME
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "REPLACE.MGMTHOSTNAME"
+        replace: ${{ secrets.MGMTHOSTNAME }}
+    
+    - name: Find and Replace USER
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "REPLACE.USER"
+        replace: ${{ secrets.USER }}
+ 
+    - name: Find and Replace PASSWORD
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "REPLACE.PASSWORD"
+        replace: ${{ secrets.PASSWORD }}
 
 #Deploy function to AWS       
     - name: Deploy to AWS
