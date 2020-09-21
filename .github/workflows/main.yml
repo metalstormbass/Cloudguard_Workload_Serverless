@@ -18,6 +18,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+          python-version: '3.7' 
+          architecture: 'x64'
 
 #Checkout code from repository
     - name: Checkout Code
