@@ -13,6 +13,12 @@ functions:
     - http:
         path: main.lambda_handler
         method: POST
+    environment:
+      MGMTHOSTNAME: REPLACE.MGMTHOSTNAME
+      TASK_PASSWORD: REPLACE.TASK_PASSWORD
+      USER: REPLACE.USER
+      SNS_ARN: !Ref SNSTopic
+      
 
 #Define SNS Topic        
 resources:
@@ -24,7 +30,7 @@ resources:
          TopicName: CPEmailTask
          Subscription:
            - Protocol: Email
-             Endpoint: EMAILADDRESS            
+             Endpoint: REPLACE.EMAILADDRESS            
 
 #DefinePlugins
 plugins:
