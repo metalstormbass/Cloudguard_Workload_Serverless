@@ -1,4 +1,5 @@
-service: CPEmailTask
+service: 
+  name: CPEmailTask
 provider:
   name: aws
   runtime: python3.7
