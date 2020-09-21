@@ -5,6 +5,7 @@ on:
     - master
     paths:
     - '_build_flag'
+
 jobs:
   build: 
     runs-on: ubuntu-latest
@@ -12,29 +13,39 @@ jobs:
       working-directory: . 
     
     steps:
-     
+#Setup Environment
     - name: "Setup Node.js"
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
 
+#Checkout code from repository
     - name: Checkout Code
       uses: actions/checkout@v1 
-      
+
+#Install Dependencies      
     - name: Install Relevant Plugins + Dependencies
       run: |
           npm install -g serverless 
           npm install -D https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz
           pip install requests
 
-      
+#Configure AWS CLI
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1  
-       
+
+# Insert Secrets into serverless.yml
+    - name: Find and Replace
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "EMAILADDRESS"
+        replace: ${{ secrets.EMAIL }}
+
+#Deploy function to AWS       
     - name: Deploy to AWS
       run: |
         pip install awscli 
