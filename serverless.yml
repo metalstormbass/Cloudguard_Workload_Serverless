@@ -1,0 +1,11 @@
+provider:
+  name: aws
+  runtime: python3.7
+
+functions:
+  CP_Email_Task:
+    handler: main.lambda_handler
+    events:
+      -http:
+         path: main
+         method: post
