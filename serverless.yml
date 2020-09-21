@@ -1,10 +1,10 @@
-service: CP_Email_Task
+service: CPEmailTask
 provider:
   name: aws
   runtime: python3.7
 
 functions:
-  CP_Email_Task:
+  CPEmailTask:
     handler: main.lambda_handler
     events:
       -http:
