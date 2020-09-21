@@ -14,7 +14,11 @@ functions:
         
 resources:
   Resources:
-    SuperTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: MyCustomTopic
+    SNSTopic:
+       Type: AWS::SNS::Topic
+       Properties:
+         DisplayName: CPEmailTask
+         TopicName: CPEmailTask
+         Subscription:
+           - Protocol: Email
+             Endpoint: ${{ secrets.EMAIL }}
