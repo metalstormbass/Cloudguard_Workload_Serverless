@@ -21,4 +21,4 @@ resources:
          TopicName: CPEmailTask
          Subscription:
            - Protocol: Email
-             Endpoint: ${{ secrets.EMAIL }}
+             Endpoint: EMAILADDRESS
