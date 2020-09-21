@@ -1,9 +1,11 @@
+#Define Service Name and Provider
 service: 
   name: CPEmailTask
 provider:
   name: aws
   runtime: python3.7
 
+#Define function
 functions:
   CPEmailTask:
     handler: main.lambda_handler
@@ -11,7 +13,8 @@ functions:
     - http:
         path: main.lambda_handler
         method: POST
-        
+
+#Define SNS Topic        
 resources:
   Resources:
     SNSTopic:
@@ -21,4 +24,14 @@ resources:
          TopicName: CPEmailTask
          Subscription:
            - Protocol: Email
-             Endpoint: EMAILADDRESS
+             Endpoint: EMAILADDRESS            
+
+#DefinePlugins
+plugins:
+  - serverless-python-requirements
+
+#Define Custom Parameters
+ custom:
+ pythonRequirements:
+   dockerizePip: non-linux
+  
