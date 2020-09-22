@@ -19,6 +19,14 @@ functions:
     - http:
         path: main.lambda_handler
         method: ANY 
+        integration: lambda
+        request:
+            template:
+              text/xhtml: '{ "stage" : "$context.stage" }'
+              application/json: '{ "httpMethod" : "$context.httpMethod" }'
+          response:
+            headers:
+              Access-Control-Allow-Origin: "'*'"
     environment:
       MGMTHOSTNAME: REPLACE.MGMTHOSTNAME
       PASSWORD: REPLACE.TASK_PASSWORD
