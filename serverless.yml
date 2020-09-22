@@ -24,7 +24,7 @@ functions:
             template:
               text/xhtml: '{ "stage" : "$context.stage" }'
               application/json: '{ "httpMethod" : "$context.httpMethod" }'
-          response:
+        response:
             headers:
               Access-Control-Allow-Origin: "'*'"
              statusCodes:
