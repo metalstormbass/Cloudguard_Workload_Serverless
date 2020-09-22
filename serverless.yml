@@ -12,7 +12,7 @@ functions:
     events:
     - http:
         path: main.lambda_handler
-        method: ANY /
+        method: ANY 
     environment:
       MGMTHOSTNAME: REPLACE.MGMTHOSTNAME
       TASK_PASSWORD: REPLACE.TASK_PASSWORD
