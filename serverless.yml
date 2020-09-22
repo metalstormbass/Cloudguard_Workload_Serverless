@@ -11,7 +11,7 @@ provider:
       Resource:
         - !Ref SNSTopic
 
-#Define function
+#Define function and Environment Variables
 functions:
   CPEmailTask:
     handler: main.lambda_handler
