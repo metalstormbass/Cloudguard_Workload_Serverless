@@ -15,7 +15,7 @@ functions:
         method: ANY 
     environment:
       MGMTHOSTNAME: REPLACE.MGMTHOSTNAME
-      TASK_PASSWORD: REPLACE.TASK_PASSWORD
+      PASSWORD: REPLACE.TASK_PASSWORD
       USER: REPLACE.USER
       SNS_ARN: !Ref SNSTopic
       
