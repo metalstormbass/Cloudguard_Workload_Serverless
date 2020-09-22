@@ -76,4 +76,17 @@ jobs:
         sls deploy -t ${CG_TOKEN} 
       timeout-minutes: 30
       continue-on-error: true
+   
+#Upload artifacts   
+    - name: Upload yml output
+      uses: actions/upload-artifact@v2
+      with:
+       name: cloudguard_output.yml
+       path: ./cloudguard_output/CloudGuardScanResults.yaml
+   
+    - name: Upload html output
+      uses: actions/upload-artifact@v2
+      with:
+       name: cloudguard_output.html
+       path: ./cloudguard_output/CloudGuardScanReport.html
 
