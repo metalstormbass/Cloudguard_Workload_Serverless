@@ -73,7 +73,7 @@ jobs:
     - name: Deploy to AWS
       run: |
         pip install awscli 
-        sls deploy 
+        sls deploy -t ${CG_CREDS} 
       timeout-minutes: 30
       continue-on-error: true
 
