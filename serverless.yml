@@ -41,9 +41,16 @@ resources:
 #DefinePlugins
 plugins:
   - serverless-python-requirements
+  - serverless-cloudguard-plugin
 
 #Define Custom Parameters
 custom:
  pythonRequirements:
    dockerizePip: non-linux
+ cloudguard:
+    fsp:
+      Enabled: true
+    proact:
+      Enabled: true
+      StoreJobReport: true
   
