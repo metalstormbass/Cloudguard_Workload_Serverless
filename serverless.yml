@@ -27,7 +27,7 @@ functions:
         response:
             headers:
               Access-Control-Allow-Origin: "'*'"
-             statusCodes:
+            statusCodes:
               200:
                 template:
                   application/json:{"application/json": "null"}
