@@ -67,7 +67,7 @@ jobs:
       uses: jacobtomlinson/gha-find-replace@master
       with:
         find: "REPLACE.TASK_PASSWORD"
-        replace: ${{ secrets.TASK_PASSWORD }}
+        replace: ${{ secrets.PASSWORD }}
 
 #Deploy function to AWS       
     - name: Deploy to AWS
