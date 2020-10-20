@@ -10,7 +10,7 @@ def post(target):
             'content-type': "application/json",
             'Accept': "*/*",
         }
-   response = requests.post(target, json=payload_list, headers=headers, verify=False)
+   response = requests.post(target, data=payload_list, headers=headers, verify=False)
    print (response)
 
 #Input target
