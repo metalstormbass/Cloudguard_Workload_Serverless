@@ -4,15 +4,12 @@ import requests
 requests.packages.urllib3.disable_warnings()
 
 def post(target):
-   payload_list={
-  'data': 'testingfrompython'
-   }
-   
+
    headers = {
             'content-type': "application/json",
             'Accept': "*/*",
         }
-   response = requests.post(target, json=payload_list, headers=headers, verify=False)
+   response = requests.post(target, data={'data' : 'testingfrompython'},verify=False)
    print (response)
 
 #Input target
