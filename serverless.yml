@@ -32,9 +32,6 @@ functions:
                 template:
                   application/json: '{"application/json": "null"}'
     environment:
-      MGMTHOSTNAME : "testing"
-      PASSWORD: 
-      USER: 
       SNS_ARN: !Ref SNSTopic
       
 
