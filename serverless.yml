@@ -1,6 +1,6 @@
 #Define Service Name and Provider
 service: 
-  name: CPEmailTask
+  name: CPWorkloadTask
 provider:
   name: aws
   runtime: python3.7
@@ -13,7 +13,7 @@ provider:
 
 #Define function and Environment Variables
 functions:
-  CPEmailTask:
+  CPWorkloadTask:
     handler: main.lambda_handler
     events:
     - http:
@@ -44,8 +44,8 @@ resources:
     SNSTopic:
        Type: AWS::SNS::Topic
        Properties:
-         DisplayName: CPEmailTask
-         TopicName: CPEmailTask
+         DisplayName: CPWorkloadTask
+         TopicName: CPWorkloadTask
          Subscription:
            - Protocol: Email
    Endpoint : 
