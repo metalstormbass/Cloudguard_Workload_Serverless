@@ -45,7 +45,7 @@ resources:
          TopicName: CPWorkloadTask
          Subscription:
            - Protocol: Email
-   Endpoint : 
+             Endpoint : 
 
 #DefinePlugins
 plugins:
