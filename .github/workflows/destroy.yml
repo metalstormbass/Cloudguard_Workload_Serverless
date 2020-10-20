@@ -37,29 +37,12 @@ jobs:
         aws-region: us-east-1  
 
 # Insert Secrets into serverless.yml
-    - name: Find and Replace Email
-      uses: jacobtomlinson/gha-find-replace@master
-      with:
-        find: "REPLACE.EMAILADDRESS"
-        replace: ${{ secrets.EMAIL }}
-        
-    - name: Find and Replace MGMTHOSTNAME
-      uses: jacobtomlinson/gha-find-replace@master
-      with:
-        find: "REPLACE.MGMTHOSTNAME"
-        replace: ${{ secrets.MGMTHOSTNAME }}
-    
-    - name: Find and Replace USER
-      uses: jacobtomlinson/gha-find-replace@master
-      with:
-        find: "REPLACE.USER"
-        replace: ${{ secrets.USER }}
- 
-    - name: Find and Replace PASSWORD
-      uses: jacobtomlinson/gha-find-replace@master
-      with:
-        find: "REPLACE.TASK_PASSWORD"
-        replace: ${{ secrets.PASSWORD }}
+    - name: Insert Secrets
+      run: |
+          sed -i "/Endpoint/c\   Endpoint\ : \"${{ secrets.EMAIL }}\"" serverless.yml
+          sed -i "/MGMTHOSTNAME/c\   MGMTHOSTNAME\ : \"${{ secrets.MGMTHOSTNAME }}\"" serverless.yml
+          sed -i "/USER/c\   USER\ : \"${{ secrets.USER }}\"" serverless.yml
+          sed -i "/PASSWORD/c\   PASSWORD\ : \"${{ secrets.PASSWORD }}\"" serverless.yml
 
 #Deploy function to AWS       
     - name: Deploy to AWS

@@ -32,9 +32,9 @@ functions:
                 template:
                   application/json: '{"application/json": "null"}'
     environment:
-      MGMTHOSTNAME: REPLACE.MGMTHOSTNAME
-      PASSWORD: REPLACE.TASK_PASSWORD
-      USER: REPLACE.USER
+   MGMTHOSTNAME : 
+      PASSWORD: 
+      USER: 
       SNS_ARN: !Ref SNSTopic
       
 
@@ -48,7 +48,7 @@ resources:
          TopicName: CPEmailTask
          Subscription:
            - Protocol: Email
-             Endpoint: REPLACE.EMAILADDRESS            
+   Endpoint : 
 
 #DefinePlugins
 plugins:
