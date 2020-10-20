@@ -234,10 +234,12 @@ json_data = {"name": aws_account_name, "credentials": {"arn":role_arn, "secret":
 
 headers = {'content-type': 'application/json'}
 
-print (json_data)
+#print (json_data)
 response = requests.post(url, auth=HTTPBasicAuth(dome9_api_key, dome9_api_secret), json=json_data, headers=headers)
 
-print (response.content)
+response_json = json.loads(response.content)
+print (response_json)
+print (response_json['id'])
 
 
 
