@@ -8,6 +8,7 @@ import boto3
 def lambda_handler(event, context):
     #Parse event
     print (event)
+    print (context)
     #data = event['data']
 
     
