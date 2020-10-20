@@ -30,8 +30,7 @@ dome9_api_secret =getpass.getpass('Dome9 Secret Key: ')
 access_key = input('AWS Access Key: ')
 aws_secret_key = getpass.getpass('AWS Secret Key: ')
 aws_account_name =input('Friendly name of AWS account for Dome9: ')
-region = "us-east-1"
-bucket_name = input('Name of S3 Bucket to create: ') #"mikedevopsbucket"
+
 
 #Gather Policy Name
 read_policy = 'dome9-readonly-policy'
