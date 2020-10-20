@@ -9,7 +9,7 @@ import time
 def lambda_handler(event, context):
     #Parse event
     data = event['body']['data']
-    time.sleep(5)
+    time.sleep(4)
     
     # Send message to SNS
     sns_arn = os.environ['SNS_ARN']
