@@ -1,6 +1,7 @@
 import json
 import os
 import boto3
+import time 
 
 
 
@@ -8,7 +9,7 @@ import boto3
 def lambda_handler(event, context):
     #Parse event
     data = event['body']['data']
-
+    time.sleep(15)
     
     # Send message to SNS
     sns_arn = os.environ['SNS_ARN']
