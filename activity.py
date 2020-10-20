@@ -9,10 +9,11 @@ def post(target):
             'content-type': "application/json",
             'Accept': "*/*",
         }
-   response = requests.post(target, data={'data' : 'testingfrompython'},verify=False)
+   response = requests.post(target, data={'data' : user_input},verify=False)
    print (response)
 
 #Input target
-target = input("Target:")
+target = input("Target: ")
+user_input = input("Enter your message here: ")
 
 post(target)
