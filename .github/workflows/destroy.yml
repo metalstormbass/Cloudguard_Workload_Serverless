@@ -1,0 +1,71 @@
+name: 'CI/CD'
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - '_destroy_flag'
+
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    env:
+      working-directory: .
+     
+    steps:
+#Setup Environment
+    - name: "Setup Node.js"
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+#Checkout code from repository
+    - name: Checkout Code
+      uses: actions/checkout@v1 
+
+#Install Dependencies      
+    - name: Install Relevant Plugins + Dependencies
+      run: |
+          npm install -g serverless 
+
+#Configure AWS CLI
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1  
+
+# Insert Secrets into serverless.yml
+    - name: Find and Replace Email
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "REPLACE.EMAILADDRESS"
+        replace: ${{ secrets.EMAIL }}
+        
+    - name: Find and Replace MGMTHOSTNAME
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "REPLACE.MGMTHOSTNAME"
+        replace: ${{ secrets.MGMTHOSTNAME }}
+    
+    - name: Find and Replace USER
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "REPLACE.USER"
+        replace: ${{ secrets.USER }}
+ 
+    - name: Find and Replace PASSWORD
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "REPLACE.TASK_PASSWORD"
+        replace: ${{ secrets.PASSWORD }}
+
+#Deploy function to AWS       
+    - name: Deploy to AWS
+      run: |
+        pip install awscli 
+        sls remove 
+      timeout-minutes: 30
+      continue-on-error: true
+   
