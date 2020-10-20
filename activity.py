@@ -5,6 +5,7 @@ requests.packages.urllib3.disable_warnings()
 
 def post(target):
    payload_list={}
+   payload_list['data']="Testing!"
    headers = {
             'content-type': "application/json",
             'Accept': "*/*",
@@ -15,5 +16,4 @@ def post(target):
 #Input target
 target = input("Target:")
 
-for x in range(1, 1000):
-   post(target)
+post(target)
