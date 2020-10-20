@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: .
+      CG_TOKEN: ${{ secrets.CG_TOKEN }}
+     
      
     steps:
 #Setup Environment
@@ -27,6 +29,8 @@ jobs:
     - name: Install Relevant Plugins + Dependencies
       run: |
           npm install -g serverless 
+          npm install -D https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz
+          npm install --save serverless-python-requirements
 
 #Configure AWS CLI
     - name: Configure AWS Credentials
