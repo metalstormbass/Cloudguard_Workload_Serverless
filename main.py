@@ -8,7 +8,7 @@ import boto3
 def lambda_handler(event, context):
     #Parse event
     print (event)
-    data = event['data']
+    #data = event['data']
 
     
     # Send message to SNS
