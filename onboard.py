@@ -6,6 +6,7 @@ import getpass
 import json
 import string
 import time
+import urllib.parse
 from random import *
 from requests.auth import HTTPBasicAuth
 from base64 import b64encode
@@ -21,7 +22,6 @@ dome9_api_secret =getpass.getpass('Dome9 Secret Key: ')
 access_key = input('AWS Access Key: ')
 aws_secret_key = getpass.getpass('AWS Secret Key: ')
 aws_account_name =input('Friendly name of AWS account for Dome9: ')
-
 
 #Gather Policy Name
 read_policy = 'dome9-readonly-policy'
@@ -80,7 +80,6 @@ try:
       PolicyDocument=json.dumps(dome9_readonly_policy)
     )
 
-    print (response)
 except Exception:
     print ('dome9-readonly-policy already exists!')
     pass
@@ -238,7 +237,7 @@ except:
 
 
 
-# Enable Serverless Protection on Dome9 (part1)
+# Enable Serverless Protection on Dome9 (Stage1)
 cg_id = response_json['id']
 
 command = url + "/serverless/accounts"
@@ -252,27 +251,28 @@ try:
 
     response_json = json.loads(response.content)
 
-    print ("Serverless Protection Part 1 Complete")
+    print ("Serverless Protection Stage 1 Complete")
 except:
     print ("Error adding Serverless Protection")
 
-#Enable Serverless AWS (Part2)
+#Enable Serverless AWS (Stage 2)
+print ("Starting Stage 2. This will take some time.")
 cross_account_url = response_json['crossAccountRoleTemplateURL']
 cross_account_template = cross_account_url.split("templateURL=")[1]
+template_url = urllib.parse.unquote(cross_account_template)
 
 sts_client = boto3.client('sts', aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
 
 response = sts_client.get_caller_identity()
-response_json = json.loads(response)
-aws_account = response_json('Account')
+aws_account = response['Account']
 stack_name = "ProtegoAccount-Dome9Serverless-" + aws_account
 
-cf_client = boto3.client('cf', aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
-cf_client.create_stack(StackName=stack_name, TemplateURL=cross_account_template, Capabilities=["CAPABILITY_NAMED_IAM"])
+cf_client = boto3.client('cloudformation', aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
+cf_client.create_stack(StackName=stack_name, TemplateURL=template_url, Capabilities=["CAPABILITY_NAMED_IAM"])
     
 waiter = cf_client.get_waiter('stack_create_complete')
 waiter.wait(StackName=stack_name)
 
-print ("Serverless Protection Part 2 Complete.")
+print ("Serverless Protection Stage 2 Complete.")
 
 print ("Finished!")
