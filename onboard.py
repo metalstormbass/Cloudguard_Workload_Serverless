@@ -11,7 +11,7 @@ import urllib.parse
 from random import *
 from requests.auth import HTTPBasicAuth
 from base64 import b64encode
-from nacl import encoding, public
+#from nacl import encoding, public
 
 
 #Prompt User for information
@@ -22,7 +22,6 @@ dome9_api_secret =getpass.getpass('Dome9 Secret Key: ')
 #AWS
 access_key = input('AWS Access Key: ')
 aws_secret_key = getpass.getpass('AWS Secret Key: ')
-aws_account_name =input('Friendly name of AWS account for Dome9: ')
 
 #Gather Policy Name
 read_policy = 'dome9-readonly-policy'
@@ -43,6 +42,8 @@ selection=input("Select a task number: ")
 
 #Add new AWS account to Dome9
 if selection=="1":
+    aws_account_name =input('Friendly name of AWS account for Dome9: ')
+    
     #Create IAM client for AWS
     iam=boto3.client('iam', aws_access_key_id=access_key,
         aws_secret_access_key=aws_secret_key,)
@@ -243,26 +244,22 @@ if selection=="1":
         response = requests.post(command, auth=HTTPBasicAuth(dome9_api_key, dome9_api_secret), json=json_data, headers=headers)
 
         response_json = json.loads(response.content)
-
+        cg_id = response_json['id']
         print ("Added Sucessfully")
+        
     except:
-        print ("There was a problem adding your account.")
+        print ("There was a problem adding your account to Dome9.")
         sys.exit()
     
-    cg_id = response_json['id']
 #Option to add to existing account
 if selection=="2":
-    cg_id = input("Enter Cloud Account ID: ")
-
-#Exit if selection not valid    
-else:
-    sys.exit()
+    cg_id = input("Enter Cloudguard ID for AWS Account: ")
+ 
 
 
     
 # Enable Serverless Protection on Dome9 (Stage1)
-
-
+aws_region = "us-east-1" #MUST BE us-east-1 TO RUN. THIS IS WHERE THE S3 EXISTS.
 command = url + "/serverless/accounts"
 
 headers = {'content-type': 'application/json'}
@@ -274,9 +271,10 @@ try:
 
     response_json = json.loads(response.content)
 
+
     print ("Serverless Protection Stage 1 Complete")
 except:
-    print ("Error adding Serverless Protection")
+    print ("Error adding Serverless Protection Stage 1")
     sys.exit()
 
 
@@ -286,13 +284,16 @@ cross_account_url = response_json['crossAccountRoleTemplateURL']
 cross_account_template = cross_account_url.split("templateURL=")[1]
 template_url = urllib.parse.unquote(cross_account_template)
 
+
+
 sts_client = boto3.client('sts', aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
 
 response = sts_client.get_caller_identity()
 aws_account = response['Account']
 stack_name = "ProtegoAccount-Dome9Serverless-" + aws_account
 
-cf_client = boto3.client('cloudformation', aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
+
+cf_client = boto3.client('cloudformation', region_name=aws_region, aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
 cf_client.create_stack(StackName=stack_name, TemplateURL=template_url, Capabilities=["CAPABILITY_NAMED_IAM"])
     
 waiter = cf_client.get_waiter('stack_create_complete')
