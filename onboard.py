@@ -300,4 +300,6 @@ waiter.wait(StackName=stack_name)
 
 print ("Serverless Protection Stage 2 Complete.")
 
+print ("Cloudguard ID: " + cg_id)
+
 print ("Finished!")
