@@ -11,15 +11,6 @@ from requests.auth import HTTPBasicAuth
 from base64 import b64encode
 from nacl import encoding, public
 
-#Encryption for Github Secrets
-
-def encrypt(public_key: str, secret_value: str) -> str:
-    """Encrypt a Unicode string using the public key."""
-    public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
-    sealed_box = public.SealedBox(public_key)
-    encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
-    return b64encode(encrypted).decode("utf-8")
-
 
 #Prompt User for information
 #Dome9
@@ -37,7 +28,7 @@ read_policy = 'dome9-readonly-policy'
 write_policy = 'dome9-write-policy'
 
 #Dome9 API
-url = "https://api.dome9.com/v2/CloudAccounts"
+url = "https://api.dome9.com/v2"
 
 #Create IAM client for AWS
 iam=boto3.client('iam', aws_access_key_id=access_key,
@@ -225,6 +216,8 @@ print ("working . . . ")
 time.sleep(20)
 
 #Attach Account to Dome9
+command = url + "/CloudAccounts"
+
 
 json_data = {"name": aws_account_name, "credentials": {"arn":role_arn, "secret": extid, "type": "RoleBased", "isReadOnly": "false"}, "fullProtection": "false", "magellan": "true", "lambdaScanner": "true",
   "serverless": {
@@ -234,13 +227,52 @@ json_data = {"name": aws_account_name, "credentials": {"arn":role_arn, "secret":
 
 headers = {'content-type': 'application/json'}
 
-#print (json_data)
-response = requests.post(url, auth=HTTPBasicAuth(dome9_api_key, dome9_api_secret), json=json_data, headers=headers)
+try: 
+    response = requests.post(command, auth=HTTPBasicAuth(dome9_api_key, dome9_api_secret), json=json_data, headers=headers)
 
-response_json = json.loads(response.content)
-print (response_json)
-print (response_json['id'])
+    response_json = json.loads(response.content)
+
+    print ("Added Sucessfully")
+except:
+    print ("There was a problem adding your account.")
 
 
 
+# Enable Serverless Protection on Dome9 (part1)
+cg_id = response_json['id']
 
+command = url + "/serverless/accounts"
+
+headers = {'content-type': 'application/json'}
+
+json_data = {'cloudAccountId': cg_id}
+
+try: 
+    response = requests.post(command, auth=HTTPBasicAuth(dome9_api_key, dome9_api_secret), json=json_data, headers=headers)
+
+    response_json = json.loads(response.content)
+
+    print ("Serverless Protection Part 1 Complete")
+except:
+    print ("Error adding Serverless Protection")
+
+#Enable Serverless AWS (Part2)
+cross_account_url = response_json['crossAccountRoleTemplateURL']
+cross_account_template = cross_account_url.split("templateURL=")[1]
+
+sts_client = boto3.client('sts', aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
+
+response = sts_client.get_caller_identity()
+response_json = json.loads(response)
+aws_account = response_json('Account')
+stack_name = "ProtegoAccount-Dome9Serverless-" + aws_account
+
+cf_client = boto3.client('cf', aws_access_key_id=access_key, aws_secret_access_key=aws_secret_key,)
+cf_client.create_stack(StackName=stack_name, TemplateURL=cross_account_template, Capabilities=["CAPABILITY_NAMED_IAM"])
+    
+waiter = cf_client.get_waiter('stack_create_complete')
+waiter.wait(StackName=stack_name)
+
+print ("Serverless Protection Part 2 Complete.")
+
+print ("Finished!")
