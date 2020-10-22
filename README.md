@@ -1,4 +1,11 @@
 # Cloudguard_Workload_Serverless
+
+![](https://github.com/metalstormbass/Cloudguard_Workload_Serverless/blob/master/.github/workflows/build.yml/badge.svg)
+
+
+
+
+
 To Run:<br>
 Onboard AWS account (you can use onboard.py)<br>
 Modify _build_flag <br>
