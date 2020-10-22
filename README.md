@@ -95,10 +95,10 @@ curl -X POST https://api.dome9.com/v2/cloudaccounts/<CLOUDGUARD_ACCOUNT_ID/SyncN
 
 ## Check Point CSPM
 
-Open Check Point CSPM and navigate to the "Serverless" option. Select "Serverless Assets" and click on the function "CPWorkloadTask-dev-CPWorkloadTask". This is what you will see:
+Open Check Point CSPM and navigate to the "Serverless" option. Select "Serverless Assets" and click on the function "CPWorkloadTask-dev-CPWorkloadTask". This is what you will see: <br><br>
 ![](images/function2.PNG)
 
-To enable the FSP to Auto Protect and Block on Detect, enable to two sliders.
+To enable the FSP to Auto Protect and Block on Detect, enable to two sliders. <br><br>
 
 ![](images/fspblock.PNG)
 
@@ -117,5 +117,8 @@ Enter your message here: This is a test message!
 <Response [200]>
 ```
 
-To destroy: <Br>
+You will receive an email from AWS SNS that contains the text provided. 
+
+
+To destroy: <br>
 Modify _destroy_flag<br>
