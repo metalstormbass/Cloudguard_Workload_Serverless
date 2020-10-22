@@ -24,13 +24,6 @@ functions:
             template:
               text/xhtml: '{ "stage" : "$context.stage" }'
               application/json: '{ "httpMethod" : "$context.httpMethod" }'
-#        response:
-#            headers:
-#              Access-Control-Allow-Origin: "'*'"
-#            statusCodes:
-#              200:
-#                template:
-#                  application/json: '{"application/json": "null"}'
     environment:
       SNS_ARN: !Ref SNSTopic
       
