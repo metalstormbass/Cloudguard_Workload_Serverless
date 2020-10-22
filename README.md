@@ -41,7 +41,7 @@ pip install -r requirements.txt
 Then run onboard.py. here is the sample output:
 
 ```
-python onboard.py
+λ python onboard.py
 Dome9 API Key: <enter API key here>
 Dome9 Secret Key: <enter API Secret here>
 AWS Access Key: <enter API key here>
@@ -71,17 +71,21 @@ First go to Settings > Secrets and populate the secrets: <br>
 
 AWS_ACCESS_KEY_ID<br>
 AWS_SECRET_ACCESS_KEY<br>
-CG_TOKEN - <br>
-<b> This must be in the format DOME9_API_KEY:DOME_API_SECRET</b> <br>
+CG_TOKEN - <b>Note: This must be in the format DOME9_API_KEY:DOME_API_SECRET</b> <br>
 EMAIL - Email to send output to <br><br>
 
 Second, select the "Actions" tab and enable workflows.
 
 ## Run the Build
 
-To deploy this function to AWS, modifiy the _build_flag and commit the changes. This kicks off the Github Action. This will deploy the function. Once the build is finished, you will then see it in Check Point CSPM
+To deploy this function to AWS, modifiy the _build_flag and commit the changes. This kicks off the Github Action. This will deploy the function. Once the build is finished, you will then see it in Check Point CSPM<br>
 
-### Sync Check Point CSPM
+![](images/build.PNG)
+
+Expand the "Deploy to AWS" tab and scroll to the bottom. You will see the Proact scan. Also, the results of the scan have been uploaded as artifacts. Note the API gateway address. This will be used for testing<br>
+![](images/build2.PNG)
+
+### Sync to Check Point CSPM
 
 Depending on when you build your function in relation to the sync interval it may take some time for the information to appear. If you would like to force this synchronization, you can run the following command: <br><br>
 
@@ -92,7 +96,26 @@ curl -X POST https://api.dome9.com/v2/cloudaccounts/<CLOUDGUARD_ACCOUNT_ID/SyncN
 ## Check Point CSPM
 
 Open Check Point CSPM and navigate to the "Serverless" option. Select "Serverless Assets" and click on the function "CPWorkloadTask-dev-CPWorkloadTask". This is what you will see:
+![](images/function2.PNG)
 
+To enable the FSP to Auto Protect and Block on Detect, enable to two sliders.
+
+![](images/fspblock.PNG)
+
+<b>Note: In order for this to take effect you must modify the _build_flag and commit the changes again. The blocking will take effect on the next build. It does not apply immediately. </b>
+
+## Testing the function
+
+First, confirm you have received the request from Amazon SNS. You must confirm the subscription. You may need to look in the your Junk Mail folder. <br><br>
+
+To test the function, navigate back to the /scripts directory and run activity.py.
+
+```
+λ python scripts\activity.py
+Target: https://0trz58j17h.execute-api.us-east-1.amazonaws.com/dev/main.lambda_handler
+Enter your message here: This is a test message!
+<Response [200]>
+```
 
 To destroy: <Br>
 Modify _destroy_flag<br>
