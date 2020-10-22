@@ -132,7 +132,7 @@ Enter your message here: <script>alert("This is malicious input")</script>
 
 This function is simple and will respond to any request with a 200 code. However, you will notice that you don't get receive the email. This is because FSP stopped the function from processing. You will also see an alert in Check Point CSPM. <br><br>
 
-![](images/fspblock.PNG)
+![](images/alert.PNG)
 
 ## Clean up
 
