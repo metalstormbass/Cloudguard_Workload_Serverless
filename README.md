@@ -1,6 +1,6 @@
 # Cloudguard_Workload_Serverless
 
-![](https://github.com/metalstormbass/Cloudguard_Workload_Serverless/blob/master/.github/workflows/build.yml/badge.svg)
+![Build Status](https://github.com/metalstormbass/Cloudguard_Workload_Serverless/blob/master/.github/workflows/build.yml/badge.svg)
 
 
 
