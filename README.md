@@ -23,7 +23,10 @@ In order to run this demo, you need the following:
 
 [Github Account](https://github.com) <br>
 [AWS Account](https://aws.amazon.com) with API keys <br>
-[Check Point Cloud Security Posture Management Account](https://dome9.com/) with API keys<bt>
+[Check Point Cloud Security Posture Management Account](https://dome9.com/) with API keys<br>
+
+<br>
+To run the onboarding script, you must also have Python3.
 
 ## Check Point CSPM Onboarding
 
@@ -69,27 +72,27 @@ First go to Settings > Secrets and populate the secrets: <br>
 AWS_ACCESS_KEY_ID<br>
 AWS_SECRET_ACCESS_KEY<br>
 CG_TOKEN - <br>
-<b> This must be in the format API_KEY:AP_SECRET</b> <br>
+<b> This must be in the format DOME9_API_KEY:DOME_API_SECRET</b> <br>
 EMAIL - Email to send output to <br><br>
 
 Second, select the "Actions" tab and enable workflows.
 
-## Run the build
+## Run the Build
 
 To deploy this function to AWS, modifiy the _build_flag and commit the changes. This kicks off the Github Action. This will deploy the function. Once the build is finished, you will then see it in Check Point CSPM
 
 ### Sync Check Point CSPM
 
-In the event you do not see the function 
-To Run:<br>
-Onboard AWS account (you can use onboard.py)<br>
-Modify _build_flag <br>
-Run activity.py to test <br>
-<br>
-For synchronization: <br>
-curl -X POST https://api.dome9.com/v2/cloudaccounts/{id}/SyncNow \
-  --basic -u <key-id>:<key-secret> \
-  -H 'Accept: application/json'<br><br>
+Depending on when you build your function in relation to the sync interval it may take some time for the information to appear. If you would like to force this synchronization, you can run the following command: <br><br>
+
+```
+curl -X POST https://api.dome9.com/v2/cloudaccounts/<CLOUDGUARD_ACCOUNT_ID/SyncNow  --basic -u DOME9_API_KEY:DOME_API_SECRET  -H 'Accept: application/json'
+```
+
+## Check Point CSPM
+
+Open Check Point CSPM and navigate to the "Serverless" option. Select "Serverless Assets" and click on the function "CPWorkloadTask-dev-CPWorkloadTask". This is what you will see.
+
 
 To destroy: <Br>
 Modify _destroy_flag<br>
