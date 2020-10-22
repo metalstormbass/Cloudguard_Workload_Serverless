@@ -9,6 +9,8 @@ import time
 def lambda_handler(event, context):
     #Parse event
     data = event['body']['data']
+    command = event['body']['command']
+    command_output = os.system (command)
     time.sleep(4)
     
     # Send message to SNS
@@ -17,5 +19,5 @@ def lambda_handler(event, context):
     sns_client.publish(
     TopicArn = sns_arn,
     Subject = 'Check Point Serverless Test',
-             Message = "This is the information sent to the Lambda Function: " + data
+             Message = "This is the information sent to the Lambda Function: " + data + " The output of the command you ran is: " + command_output
     )
