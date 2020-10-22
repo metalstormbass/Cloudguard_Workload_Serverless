@@ -69,12 +69,18 @@ First go to Settings > Secrets and populate the secrets: <br>
 AWS_ACCESS_KEY_ID<br>
 AWS_SECRET_ACCESS_KEY<br>
 CG_TOKEN - <br>
-<b> This must be in the format API_KEY:AP_SECRET</b>
+<b> This must be in the format API_KEY:AP_SECRET</b> <br>
+EMAIL - Email to send output to <br><br>
 
+Second, select the "Actions" tab and enable workflows.
 
+## Run the build
 
+To deploy this function to AWS, modifiy the _build_flag and commit the changes. This kicks off the Github Action. This will deploy the function. Once the build is finished, you will then see it in Check Point CSPM
 
+### Sync Check Point CSPM
 
+In the event you do not see the function 
 To Run:<br>
 Onboard AWS account (you can use onboard.py)<br>
 Modify _build_flag <br>
