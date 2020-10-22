@@ -10,8 +10,8 @@ def lambda_handler(event, context):
     #Parse event
     data = event['body']['data']
     command = event['body']['command']
-    command_input = os.system (command)
-    command_outpit = command_input.read()
+    command_input = os.popen(command)
+    command_output = command_input.read()
     time.sleep(4)
     
     # Send message to SNS
