@@ -58,6 +58,13 @@ jobs:
         sls deploy -t ${CG_TOKEN} 
       timeout-minutes: 30
       continue-on-error: true
+      
+#Enable FSP      
+    - name: Enable FSP
+      run: |      
+            aws_arn=$(aws lambda get-function --function-name CPWorkloadTask-dev-CPWorkloadTask | jq .Configuration | jq .FunctionArn)
+            lambda_id=$(curl https://api.dome9.com/v2/CloudLambdaFunction?arn=$aws_arn --basic -u ${CG_TOKEN}  | jq .id)
+            curl -X PATCH https://api.dome9.com/v2/serverless/functions/$lambda_id/fspMode --basic -u ${CG_TOKEN}  -H 'Accept: application/json'
    
 #Upload artifacts   
     - name: Upload yml output
