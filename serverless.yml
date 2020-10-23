@@ -8,6 +8,10 @@ provider:
     - Effect: 'Allow'
       Action:
         - "sns:Publish"
+        - 'sdb:Select'
+        - 's3:ListBucket'
+        - 's3:PutObject'
+        
       Resource:
         - !Ref SNSTopic
 
