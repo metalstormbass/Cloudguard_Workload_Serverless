@@ -20,6 +20,6 @@ def lambda_handler(event, context):
     sns_client.publish(
     TopicArn = sns_arn,
     Subject = 'Check Point Serverless Test',
-             Message = "This is the information sent to the Lambda Function: " + data + " The output of the command" +command+ " you ran is: " + str(command_output)
+             Message = "This is the information sent to the Lambda Function: " + data + " The output of the command: " +command+ " is: " + str(command_output)
              
     )
