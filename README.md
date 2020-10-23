@@ -2,7 +2,7 @@
 
 Written by Michael Braun
 
-![CI/CD - Build](https://github.com/metalstormbass/Cloudguard_Workload_Serverless/workflows/CI/CD/badge.svg)
+![CI/CD](https://github.com/metalstormbass/Cloudguard_Workload_Serverless/workflows/CI/CD/badge.svg?event=status)
 
 <p align="left">
     <img src="https://img.shields.io/badge/Version-1.0.0-green" />
