@@ -138,6 +138,24 @@ Since this is a test function, we will not be taking advantage of the learning m
 
 ![](images/block1.PNG)
 
+I can then send the following test command. You will see that the email notification still comes through, but the offending command will not have run.
+
+```
+λ python scripts\activity.py
+Target: https://8hvodafx09.execute-api.us-east-1.amazonaws.com/dev/main.lambda_handler
+Enter your message here: testing again
+Enter your test command here: env
+<Response [200]>
+```
+
+Here is the block:
+![](images/block2.PNG)
+
+Here is the email and you can see the command did not run:
+
+![](images/email1.PNG)
+
+
 ## Clean up
 
 To remove this Lambda function, modify the _destroy_flag and commit the changes. This will remove the CPWorkloadTask-dev-CPWorkloadTask function from AWS.
