@@ -149,7 +149,7 @@ Enter your test command here: env
 ```
 
 Here is the block:
-![](images/block2.PNG)
+![](images/alert2.PNG)
 
 Here is the email and you can see the command did not run:
 
