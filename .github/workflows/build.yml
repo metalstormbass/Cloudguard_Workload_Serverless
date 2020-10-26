@@ -62,14 +62,14 @@ jobs:
 Enable FSP      
     - name: Enable FSP
       run: |
-           sleep 10
-           aws_arn=$(aws lambda get-function --function-name CPWorkloadTask-dev-CPWorkloadTask | jq .Configuration | jq .FunctionArn)
-           aws_arn=$(sed -e 's/^"//' -e 's/"$//' <<<"$aws_arn")
-           lambda_id=$(curl https://api.dome9.com/v2/CloudLambdaFunction?arn=$aws_arn --basic -u ${CG_TOKEN}  | jq .id)
-           lambda_id=$(sed -e 's/^"//' -e 's/"$//' <<<"$lambda_id")
-           
-           curl -X PATCH https://api.dome9.com/v2/serverless/functions/$lambda_id/fsp --basic -u ${CG_TOKEN}  -H 'Accept: application/json' --data "{\"enable\": true}"
-           curl -X PATCH https://api.dome9.com/v2/serverless/functions/$lambda_id/fspMode --basic -u ${CG_TOKEN}  -H 'Accept: application/json' --data "{\"fspMode\" : \"Block\"}"
+        sleep 10
+        aws_arn=$(aws lambda get-function --function-name CPWorkloadTask-dev-CPWorkloadTask | jq .Configuration | jq .FunctionArn)
+        aws_arn=$(sed -e 's/^"//' -e 's/"$//' <<<"$aws_arn")
+       lambda_id=$(curl https://api.dome9.com/v2/CloudLambdaFunction?arn=$aws_arn --basic -u ${CG_TOKEN}  | jq .id)
+       lambda_id=$(sed -e 's/^"//' -e 's/"$//' <<<"$lambda_id")
+
+       curl -X PATCH https://api.dome9.com/v2/serverless/functions/$lambda_id/fsp --basic -u ${CG_TOKEN}  -H 'Accept: application/json' --data "{\"enable\": true}"
+       curl -X PATCH https://api.dome9.com/v2/serverless/functions/$lambda_id/fspMode --basic -u ${CG_TOKEN}  -H 'Accept: application/json' --data "{\"fspMode\" : \"Block\"}"
    
 #Upload artifacts   
     - name: Upload yml output
