@@ -134,6 +134,10 @@ This function is simple and will respond to any request with a 200 code. However
 
 ![](images/alert.PNG)
 
+Since this is a test function, we will not be taking advantage of the learning mechanism. That being said, you can explicitly define rules to make your function more secure. For example, you can input the following rule to block processes and nullify the command input:
+
+![](images/block1.PNG)
+
 ## Clean up
 
 To remove this Lambda function, modify the _destroy_flag and commit the changes. This will remove the CPWorkloadTask-dev-CPWorkloadTask function from AWS.
