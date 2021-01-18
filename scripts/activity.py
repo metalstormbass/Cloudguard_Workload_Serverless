@@ -3,16 +3,15 @@ import requests
 #remove https warning
 requests.packages.urllib3.disable_warnings()
 
-def post(target):
-
+def post(target, user_input):
    headers = {
             'content-type': "application/json",
             'Accept': "*/*",
         }
-   response = requests.post(target, data={'data' : user_input, 'command' : user_command },verify=False)
+   response = requests.post(target, data={'data' : user_input},verify=False)
    print (response.content)
 
 #Input target
 target = input("Target: ")
 user_input = input("Enter your message here: ")
-post(target)
+post(target, user_input)
