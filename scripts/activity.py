@@ -10,10 +10,9 @@ def post(target):
             'Accept': "*/*",
         }
    response = requests.post(target, data={'data' : user_input, 'command' : user_command },verify=False)
-   print (response)
+   print (response.content)
 
 #Input target
 target = input("Target: ")
 user_input = input("Enter your message here: ")
-user_command = input("Enter your test command here: ")
 post(target)
